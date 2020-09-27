@@ -1,3 +1,6 @@
+
+--Put this in the scripts folder in StarterGui > Morph > scripts
+
 ------BY: 25chouck------
 -----Sept. 20 2020-----
 
