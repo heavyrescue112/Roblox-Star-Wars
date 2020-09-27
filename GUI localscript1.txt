@@ -1,0 +1,211 @@
+------BY: 25chouck------
+-----Sept. 20 2020-----
+
+----------------
+---CONSTANCES---
+----------------
+
+local LegionGUI = script.Parent.Parent.legion
+local TrooperGUI = script.Parent.Parent.trooper
+local CompanyGUI = script.Parent.Parent.company
+local morphs = game.ReplicatedStorage.Republic.Morphs
+local CamPart = game.Workspace.Spawn.Base.Cam
+local basictrooper = game.Workspace.Spawn.Base.Trooper
+local Player = game.Players.LocalPlayer
+local devtrooper = game.Workspace.Spawn.Base.Trooper
+local Camera = game.Workspace.CurrentCamera
+----------
+---INIT---
+----------
+
+repeat wait() until Player.Character
+wait(0.5)
+
+Camera.CameraType = "Scriptable"
+Camera.CFrame = CamPart.CFrame
+
+---------------
+---FUNCTIONS---
+---------------
+
+function GiveHelmet(Helmet, Body)
+	if Player.Character:FindFirstChild("Helmet") then
+		Player.Character:FindFirstChild("Helmet"):Destroy()
+	end
+	local HelmetClone = Helmet:Clone()
+
+	HelmetClone.PrimaryPart = HelmetClone.Middle
+	HelmetClone:SetPrimaryPartCFrame(Player.Character.Head.CFrame)
+
+	HelmetClone.Parent = Player.Character
+
+	Player.Character.Head.Transparency = 1
+	Player.Character.Head.face.Transparency = 1
+	
+	if Player.Character:FindFirstChild("Shirt")then
+		Player.Character:FindFirstChild("Shirt"):Destroy()
+	end
+	if Player.Character:FindFirstChild("Pants")then
+		Player.Character:FindFirstChild("Pants"):Destroy()
+	end
+
+	local ShirtClone = Body.Shirt:Clone()
+	local PantsClone = Body.Pants:Clone()
+	
+	ShirtClone.Parent = Player.Character
+	PantsClone.Parent = Player.Character
+	
+	for i,v in pairs (HelmetClone:GetChildren())do
+		Player.Character.Humanoid:RemoveAccessories()
+		local W = Instance.new("Weld")
+		W.Part0 = HelmetClone.Middle
+		W.Part1 = v
+		local CJ = CFrame.new(HelmetClone.Middle.Position)
+		local C0 = HelmetClone.Middle.CFrame:inverse()*CJ
+		local C1 = v.CFrame:inverse()*CJ
+		W.C0 = C0
+		W.C1 = C1
+		W.Parent = HelmetClone.Middle 
+	end
+	local W2 = Instance.new("Weld")
+	W2.Part0 = Player.Character.Head
+	W2.Part1 = HelmetClone.Middle
+	W2.Parent = Player.Character.Head
+	for i,v in pairs (HelmetClone:GetChildren())do
+		v.Anchored = false
+		v.CanCollide= false
+	end
+
+end
+
+function GiveHelmet2(Helmet, Body)
+	if devtrooper.Body:FindFirstChild("Helmet") then
+		devtrooper.Body:FindFirstChild("Helmet"):Destroy()
+	end
+	local HelmetClone = Helmet:Clone()
+	
+	HelmetClone.PrimaryPart = HelmetClone.Middle
+	HelmetClone:SetPrimaryPartCFrame(devtrooper.Body.Head.CFrame)
+	
+	HelmetClone.Parent = devtrooper.Body
+	
+	devtrooper.Body.Head.Transparency = 1
+	devtrooper.Body.Head.Transparency = 1
+	
+	if devtrooper.Body:FindFirstChild("Shirt")then
+		devtrooper.Body:FindFirstChild("Shirt"):Destroy()
+	end
+	if devtrooper.Body:FindFirstChild("Pants")then
+		devtrooper.Body:FindFirstChild("Pants"):Destroy()
+	end
+	
+	local ShirtClone = Body.Shirt:Clone()
+	local PantsClone = Body.Pants:Clone()
+	
+	ShirtClone.Parent = devtrooper.Body
+	PantsClone.Parent = devtrooper.Body
+	
+	for i,v in pairs (HelmetClone:GetChildren())do
+		devtrooper.Body.Humanoid:RemoveAccessories()
+		local W = Instance.new("Weld")
+		W.Part0 = HelmetClone.Middle
+		W.Part1 = v
+		local CJ = CFrame.new(HelmetClone.Middle.Position)
+		local C0 = HelmetClone.Middle.CFrame:inverse()*CJ
+		local C1 = v.CFrame:inverse()*CJ
+		W.C0 = C0
+		W.C1 = C1
+		W.Parent = HelmetClone.Middle 
+	end
+	local W2 = Instance.new("Weld")
+	W2.Part0 = devtrooper.Body.Head
+	W2.Part1 = HelmetClone.Middle
+	W2.Parent = devtrooper.Body.Head
+	for i,v in pairs (HelmetClone:GetChildren())do
+		v.Anchored = false
+		v.CanCollide= false
+	end
+	
+end
+
+
+
+
+----------
+---MAIN---
+----------
+
+
+
+for i,v in pairs(morphs:GetChildren()) do
+	local button = Instance.new("TextButton")
+	button.TextXAlignment = "Center"
+	button.BackgroundTransparency = 1
+	button.TextColor3 = Color3.fromRGB(255,255,255)
+	button.Font = "SourceSansBold"
+	button.TextSize = 30
+	button.Size = UDim2.new(1,0,0,50)
+
+	button.Text = v.Name
+	button.Parent = LegionGUI
+
+	button.MouseButton1Click:Connect(function()
+		for i,v3 in pairs(CompanyGUI:GetChildren()) do
+			if v3.ClassName == "TextButton" then
+				v3:Destroy()
+			end
+		end
+		for i,v4 in pairs(TrooperGUI:GetChildren()) do
+			if v4.ClassName == "TextButton" then
+				v4:Destroy()
+			end
+		end
+		for i,v2 in pairs(v:GetChildren()) do
+			local button2 = Instance.new("TextButton")
+			button2.TextXAlignment = "Center"
+			button2.BackgroundTransparency = 1
+			button2.TextColor3 = Color3.fromRGB(255,255,255)
+			button2.Font = "SourceSansBold"
+			button2.TextSize = 30
+			button2.Size = UDim2.new(1,0,0,50)
+
+			button2.Text = v2.Name
+			button2.Parent = CompanyGUI
+
+			button2.MouseButton1Click:Connect(function()
+				for i,v4 in pairs(TrooperGUI:GetChildren()) do
+					if v4.ClassName == "TextButton" then
+						v4:Destroy()
+					end
+				end
+				for i,v5 in pairs(v2:GetChildren()) do
+					local button3 = Instance.new("TextButton")
+					button3.TextXAlignment = "Center"
+					button3.BackgroundTransparency = 1
+					button3.TextColor3 = Color3.fromRGB(255,255,255)
+					button3.Font = "SourceSansBold"
+					button3.TextSize = 30
+					button3.Size = UDim2.new(1,0,0,50)
+
+					button3.Text = v5.Name
+					button3.Parent = TrooperGUI
+					button3.MouseButton1Click:Connect(function()
+						print(v5.Name)
+						GiveHelmet2(devtrooper.Mark.Helmet, devtrooper.Body)
+					end)
+					script.Parent.Parent.deploy.MouseButton1Click:Connect(function()
+						if devtrooper.Mark:GetChildren("Helmet") then
+							print("Deploying as "..v5.Name)
+							GiveHelmet(v5.Mark.Helmet, v5.Body)
+							game.StarterGui.Morph.Enabled = false
+							Camera.CameraType = "Custom"
+						else
+							print("You need to select a morph first!!!")
+						end
+						
+					end)	
+				end
+			end)
+		end
+	end)
+end
